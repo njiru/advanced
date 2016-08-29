@@ -5,6 +5,7 @@ namespace backend\controllers;
 use Yii;
 use backend\models\Doctors;
 use backend\models\DoctorsSearch;
+use backend\models\Specialization;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -43,6 +44,31 @@ class DoctorsController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
+
+    //find specialization by ID
+
+   /* public function actionLists($id)
+    {
+
+        $countspecs=specialization::find()
+            ->where(['specialization_specialization_id'=>$id])
+            ->count();
+
+        $specs=specialization::find()
+            ->where(['specialization_specialization_id'=>$id])
+            ->all();
+
+        if($countspecs>0){
+            foreach ($specs as $spec) {
+                echo "<option value='".$spec->specialization_id."'>".$spec->specialization_name."</option>";
+            }
+        }
+        else
+            {
+                echo "<option>--</option>";
+            }
+
+    } */
 
     /**
      * Displays a single Doctors model.

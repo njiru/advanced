@@ -2,6 +2,9 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\helpers\ArrayHelper;
+use backend\models\Specialization;
+//use backend\models\Doctors;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\Appointments */
@@ -20,9 +23,24 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'date')->textInput() ?>
 
-    <?= $form->field($model, 'specialization_id')->textInput() ?>
+    <?= $form->field($model, 'specialization_id')->dropDownList(
+        ArrayHelper::map(Specialization::find()->all(), 'specialization_id', 'specialization_name'),
+        [
+            'prompt'=>'Select Specialist',
+            'onchange'=>'
+              $.post("index.php?r=specialization/lists&id='.'"+$(this).val(),function(data){
+                    $("select#appointments-specialization_specialization_id").html(data);
+                });'
+        ]
+    ) ?>
 
-    <?= $form->field($model, 'doctor_id')->textInput() ?>
+    <!-- <?= $form->field($model, 'doctor_id')->dropDownList(
+      //ArrayHelper::map(Doctors::find()->all(), 'doctor_id','last_name'),
+        [
+        //    'prompt' => 'Select Doctor', 
+        ]
+    ) ?>
+    -->
 
     <?= $form->field($model, 'Reason')->textarea(['rows' => 6]) ?>
 
