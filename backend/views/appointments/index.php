@@ -25,11 +25,10 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             //'appointment_id',
-            'first_name',
-            'last_name',
+            'patient_name',
             'email:email',
             'date',
-            // 'specialization_id',
+            'specialization_id',
             // 'doctor_id',
             // 'Reason:ntext',
 

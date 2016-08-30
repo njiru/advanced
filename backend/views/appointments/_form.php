@@ -3,8 +3,8 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
-use backend\models\Specialization;
-//use backend\models\Doctors;
+use backend\models\Specializations;
+use backend\models\Doctors;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\Appointments */
@@ -15,32 +15,32 @@ use backend\models\Specialization;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'first_name')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'last_name')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'patient_name')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'date')->textInput() ?>
 
-    <?= $form->field($model, 'specialization_id')->dropDownList(
-        ArrayHelper::map(Specialization::find()->all(), 'specialization_id', 'specialization_name'),
+    <!-- adding dropdownlist on specialization --> 
+<?= $form->field($model, 'specialization_id')->dropDownList(
+        ArrayHelper::map(Specializations::find()->all(), 'specialization_id', 'specialization_name'),
         [
             'prompt'=>'Select Specialist',
             'onchange'=>'
-              $.post("index.php?r=specialization/lists&id='.'"+$(this).val(),function(data){
-                    $("select#appointments-specialization_specialization_id").html(data);
+              $.post("index.php?r=doctors/lists&id='.'"+$(this).val(),function(data){
+                    $("select#appointments-doctor_id").html(data);
                 });'
         ]
     ) ?>
 
-    <!-- <?= $form->field($model, 'doctor_id')->dropDownList(
-      //ArrayHelper::map(Doctors::find()->all(), 'doctor_id','last_name'),
+    <!-- adding dropdownlist on doctors -->
+     <?= $form->field($model, 'doctor_id')->dropDownList(
+      ArrayHelper::map(Doctors::find()->all(), 'doctor_id','doctors_name'),
         [
-        //    'prompt' => 'Select Doctor', 
+            'prompt' => 'Select Doctor', 
         ]
     ) ?>
-    -->
+
 
     <?= $form->field($model, 'Reason')->textarea(['rows' => 6]) ?>
 

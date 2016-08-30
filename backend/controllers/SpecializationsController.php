@@ -3,16 +3,16 @@
 namespace backend\controllers;
 
 use Yii;
-use backend\models\Specialization;
-use backend\models\SpecializationSearch;
+use backend\models\Specializations;
+use backend\models\SpecializationsSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * SpecializationController implements the CRUD actions for Specialization model.
+ * SpecializationsController implements the CRUD actions for Specializations model.
  */
-class SpecializationController extends Controller
+class SpecializationsController extends Controller
 {
     /**
      * @inheritdoc
@@ -30,12 +30,12 @@ class SpecializationController extends Controller
     }
 
     /**
-     * Lists all Specialization models.
+     * Lists all Specializations models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new SpecializationSearch();
+        $searchModel = new SpecializationsSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -44,9 +44,8 @@ class SpecializationController extends Controller
         ]);
     }
 
-
     /**
-     * Displays a single Specialization model.
+     * Displays a single Specializations model.
      * @param integer $id
      * @return mixed
      */
@@ -58,13 +57,13 @@ class SpecializationController extends Controller
     }
 
     /**
-     * Creates a new Specialization model.
+     * Creates a new Specializations model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Specialization();
+        $model = new Specializations();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->specialization_id]);
@@ -76,7 +75,7 @@ class SpecializationController extends Controller
     }
 
     /**
-     * Updates an existing Specialization model.
+     * Updates an existing Specializations model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -95,7 +94,7 @@ class SpecializationController extends Controller
     }
 
     /**
-     * Deletes an existing Specialization model.
+     * Deletes an existing Specializations model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -107,40 +106,16 @@ class SpecializationController extends Controller
         return $this->redirect(['index']);
     }
 
-
-
-    public function actionLists($id)
-    {
-
-        $countspecs=specialization::find()
-            ->where(['specialization_specialization_id'=>$id])
-            ->count();
-
-        $specs=specialization::find()
-            ->where(['specialization_specialization_id'=>$id])
-            ->all();
-
-        if($countspecs>0){
-            foreach ($specs as $spec) {
-                echo "<option value='".$spec->specialization_id."'>".$spec->specialization_name."</option>";
-            }
-        }
-        else
-            {
-                echo "<option>--</option>";
-            }
-    }
-
     /**
-     * Finds the Specialization model based on its primary key value.
+     * Finds the Specializations model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Specialization the loaded model
+     * @return Specializations the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Specialization::findOne($id)) !== null) {
+        if (($model = Specializations::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

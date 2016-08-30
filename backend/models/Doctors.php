@@ -8,12 +8,13 @@ use Yii;
  * This is the model class for table "doctors".
  *
  * @property integer $doctor_id
- * @property string $first_name
- * @property string $last_name
+ * @property string $doctors_name
  * @property string $email
  * @property integer $specialization_id
  *
- * @property Specialization $specialization
+ * @property Appointments[] $appointments
+ * @property Appointments[] $appointments0
+ * @property Specializations $specialization
  */
 class Doctors extends \yii\db\ActiveRecord
 {
@@ -31,11 +32,11 @@ class Doctors extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['first_name', 'last_name', 'email', 'specialization_id'], 'required'],
+            [['doctors_name', 'email', 'specialization_id'], 'required'],
             [['specialization_id'], 'integer'],
-            [['first_name', 'last_name'], 'string', 'max' => 20],
+            [['doctors_name'], 'string', 'max' => 20],
             [['email'], 'string', 'max' => 50],
-            [['specialization_id'], 'exist', 'skipOnError' => true, 'targetClass' => Specialization::className(), 'targetAttribute' => ['specialization_id' => 'specialization_id']],
+            [['specialization_id'], 'exist', 'skipOnError' => true, 'targetClass' => Specializations::className(), 'targetAttribute' => ['specialization_id' => 'specialization_id']],
         ];
     }
 
@@ -46,8 +47,7 @@ class Doctors extends \yii\db\ActiveRecord
     {
         return [
             'doctor_id' => 'Doctor ID',
-            'first_name' => 'First Name',
-            'last_name' => 'Last Name',
+            'doctors_name' => 'Doctors Name',
             'email' => 'Email',
             'specialization_id' => 'Specialization ID',
         ];
@@ -56,8 +56,24 @@ class Doctors extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getAppointments()
+    {
+        return $this->hasMany(Appointments::className(), ['specialization_id' => 'specialization_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getAppointments0()
+    {
+        return $this->hasMany(Appointments::className(), ['doctor_id' => 'doctor_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getSpecialization()
     {
-        return $this->hasOne(Specialization::className(), ['specialization_id' => 'specialization_id']);
+        return $this->hasOne(Specializations::className(), ['specialization_id' => 'specialization_id']);
     }
 }

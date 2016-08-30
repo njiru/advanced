@@ -5,7 +5,6 @@ namespace backend\controllers;
 use Yii;
 use backend\models\Doctors;
 use backend\models\DoctorsSearch;
-use backend\models\Specialization;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -44,31 +43,6 @@ class DoctorsController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
-
-    //find specialization by ID
-
-   /* public function actionLists($id)
-    {
-
-        $countspecs=specialization::find()
-            ->where(['specialization_specialization_id'=>$id])
-            ->count();
-
-        $specs=specialization::find()
-            ->where(['specialization_specialization_id'=>$id])
-            ->all();
-
-        if($countspecs>0){
-            foreach ($specs as $spec) {
-                echo "<option value='".$spec->specialization_id."'>".$spec->specialization_name."</option>";
-            }
-        }
-        else
-            {
-                echo "<option>--</option>";
-            }
-
-    } */
 
     /**
      * Displays a single Doctors model.
@@ -132,6 +106,19 @@ class DoctorsController extends Controller
         return $this->redirect(['index']);
     }
 
+    public function actionLists($id){
+
+        $countdoctors = Doctors::find()->where(['specialization_id' => $id])->count();
+        $doctors      = Doctors::find()->where(['specialization_id' => $id])->all();
+
+        if(count($countdoctors) > 0){
+            foreach ($doctors as $doctor) {
+                echo "<option value='" . $doctor->doctor_id . "'>" . $doctor->doctors_name . "</option>";
+            }
+        }else{
+            echo "<option>-</option>";
+        }
+    }
     /**
      * Finds the Doctors model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
@@ -148,3 +135,4 @@ class DoctorsController extends Controller
         }
     }
 }
+?>

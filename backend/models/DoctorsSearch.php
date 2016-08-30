@@ -19,7 +19,7 @@ class DoctorsSearch extends Doctors
     {
         return [
             [['doctor_id', 'specialization_id'], 'integer'],
-            [['first_name', 'last_name', 'email'], 'safe'],
+            [['doctors_name', 'email'], 'safe'],
         ];
     }
 
@@ -63,8 +63,7 @@ class DoctorsSearch extends Doctors
             'specialization_id' => $this->specialization_id,
         ]);
 
-        $query->andFilterWhere(['like', 'first_name', $this->first_name])
-            ->andFilterWhere(['like', 'last_name', $this->last_name])
+        $query->andFilterWhere(['like', 'doctors_name', $this->doctors_name])
             ->andFilterWhere(['like', 'email', $this->email]);
 
         return $dataProvider;

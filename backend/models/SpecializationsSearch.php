@@ -5,12 +5,12 @@ namespace backend\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use backend\models\Specialization;
+use backend\models\Specializations;
 
 /**
- * SpecializationSearch represents the model behind the search form about `backend\models\Specialization`.
+ * SpecializationsSearch represents the model behind the search form about `backend\models\Specializations`.
  */
-class SpecializationSearch extends Specialization
+class SpecializationsSearch extends Specializations
 {
     /**
      * @inheritdoc
@@ -41,7 +41,7 @@ class SpecializationSearch extends Specialization
      */
     public function search($params)
     {
-        $query = Specialization::find();
+        $query = Specializations::find();
 
         // add conditions that should always apply here
 

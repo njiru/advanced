@@ -5,22 +5,21 @@ namespace backend\models;
 use Yii;
 
 /**
- * This is the model class for table "specialization".
+ * This is the model class for table "specializations".
  *
  * @property integer $specialization_id
  * @property string $specialization_name
  *
- * @property AppointmentBooking[] $appointmentBookings
  * @property Doctors[] $doctors
  */
-class Specialization extends \yii\db\ActiveRecord
+class Specializations extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'specialization';
+        return 'specializations';
     }
 
     /**
@@ -43,14 +42,6 @@ class Specialization extends \yii\db\ActiveRecord
             'specialization_id' => 'Specialization ID',
             'specialization_name' => 'Specialization Name',
         ];
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getAppointmentBookings()
-    {
-        return $this->hasMany(AppointmentBooking::className(), ['specialization_id' => 'specialization_id']);
     }
 
     /**

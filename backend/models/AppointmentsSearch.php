@@ -19,7 +19,7 @@ class AppointmentsSearch extends Appointments
     {
         return [
             [['appointment_id', 'specialization_id', 'doctor_id'], 'integer'],
-            [['first_name', 'last_name', 'email', 'date', 'Reason'], 'safe'],
+            [['patient_name', 'email', 'date', 'Reason'], 'safe'],
         ];
     }
 
@@ -65,8 +65,7 @@ class AppointmentsSearch extends Appointments
             'doctor_id' => $this->doctor_id,
         ]);
 
-        $query->andFilterWhere(['like', 'first_name', $this->first_name])
-            ->andFilterWhere(['like', 'last_name', $this->last_name])
+        $query->andFilterWhere(['like', 'patient_name', $this->patient_name])
             ->andFilterWhere(['like', 'email', $this->email])
             ->andFilterWhere(['like', 'Reason', $this->Reason]);
 

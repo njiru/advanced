@@ -5,18 +5,18 @@ namespace backend\models;
 use Yii;
 
 /**
- * This is the model class for table "appointmentBooking".
+ * This is the model class for table "appointments".
  *
  * @property integer $appointment_id
- * @property string $first_name
- * @property string $last_name
+ * @property string $patient_name
  * @property string $email
  * @property string $date
  * @property integer $specialization_id
  * @property integer $doctor_id
  * @property string $Reason
  *
- * @property Specialization $specialization
+ * @property Doctors $specialization
+ * @property Doctors $doctor
  */
 class Appointments extends \yii\db\ActiveRecord
 {
@@ -25,7 +25,7 @@ class Appointments extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'appointmentBooking';
+        return 'appointments';
     }
 
     /**
@@ -34,13 +34,14 @@ class Appointments extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['first_name', 'last_name', 'email', 'date', 'specialization_id', 'doctor_id', 'Reason'], 'required'],
+            [['patient_name', 'email', 'date', 'specialization_id', 'doctor_id', 'Reason'], 'required'],
             [['date'], 'safe'],
             [['specialization_id', 'doctor_id'], 'integer'],
             [['Reason'], 'string'],
-            [['first_name', 'last_name'], 'string', 'max' => 20],
+            [['patient_name'], 'string', 'max' => 20],
             [['email'], 'string', 'max' => 50],
-            [['specialization_id'], 'exist', 'skipOnError' => true, 'targetClass' => Specialization::className(), 'targetAttribute' => ['specialization_id' => 'specialization_id']],
+            [['specialization_id'], 'exist', 'skipOnError' => true, 'targetClass' => Doctors::className(), 'targetAttribute' => ['specialization_id' => 'specialization_id']],
+            [['doctor_id'], 'exist', 'skipOnError' => true, 'targetClass' => Doctors::className(), 'targetAttribute' => ['doctor_id' => 'doctor_id']],
         ];
     }
 
@@ -51,8 +52,7 @@ class Appointments extends \yii\db\ActiveRecord
     {
         return [
             'appointment_id' => 'Appointment ID',
-            'first_name' => 'First Name',
-            'last_name' => 'Last Name',
+            'patient_name' => 'Patient Name',
             'email' => 'Email',
             'date' => 'Date',
             'specialization_id' => 'Specialization ID',
@@ -66,6 +66,14 @@ class Appointments extends \yii\db\ActiveRecord
      */
     public function getSpecialization()
     {
-        return $this->hasOne(Specialization::className(), ['specialization_id' => 'specialization_id']);
+        return $this->hasOne(Doctors::className(), ['specialization_id' => 'specialization_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getDoctor()
+    {
+        return $this->hasOne(Doctors::className(), ['doctor_id' => 'doctor_id']);
     }
 }
