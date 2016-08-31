@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
+use dosamigos\datepicker\DatePicker;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\AppointmentsSearch */
@@ -20,6 +21,8 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('Create Appointments', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
+<?php Pjax::begin(); ?>
+
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
@@ -30,6 +33,19 @@ $this->params['breadcrumbs'][] = $this->title;
             'patient_name',
             'email:email',
             'date',
+            [
+                'attribute'=>'date',
+                'value'=>'date',
+                'format'=>'raw',
+                'filter'=>DatePicker::widget([
+                        'model' => $searchModel,
+                        'attribute' => 'date',
+                            'clientOptions' => [
+                                'autoclose' => true,
+                                'format' => 'yyyy-m-dd'
+                            ]
+                    ])
+            ],
             'specialization_id',
             // 'doctor_id',
             // 'Reason:ntext',

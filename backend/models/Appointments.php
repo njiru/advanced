@@ -39,7 +39,7 @@ class Appointments extends \yii\db\ActiveRecord
             [['specialization_id', 'doctor_id'], 'integer'],
             [['Reason'], 'string'],
             [['patient_name'], 'string', 'max' => 20],
-            [['email'], 'string', 'max' => 50],
+            ['email','email'],
             [['specialization_id'], 'exist', 'skipOnError' => true, 'targetClass' => Doctors::className(), 'targetAttribute' => ['specialization_id' => 'specialization_id']],
             [['doctor_id'], 'exist', 'skipOnError' => true, 'targetClass' => Doctors::className(), 'targetAttribute' => ['doctor_id' => 'doctor_id']],
         ];

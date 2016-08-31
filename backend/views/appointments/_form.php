@@ -5,6 +5,7 @@ use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use backend\models\Specializations;
 use backend\models\Doctors;
+use dosamigos\datepicker\DatePicker;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\Appointments */
@@ -19,7 +20,14 @@ use backend\models\Doctors;
 
     <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'date')->textInput() ?>
+    <?= $form->field($model, 'date')->widget(
+    DatePicker::className(), [
+        'inline' => false, 
+        'clientOptions' => [
+        'autoclose' => true,
+        'format' => 'yyyy-m-dd'
+        ]
+]);?>
 
     <!-- adding dropdownlist on specialization --> 
 <?= $form->field($model, 'specialization_id')->dropDownList(

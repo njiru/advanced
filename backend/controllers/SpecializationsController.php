@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use Yii;
 use backend\models\Specializations;
+use backend\models\Doctors;
 use backend\models\SpecializationsSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -64,12 +65,19 @@ class SpecializationsController extends Controller
     public function actionCreate()
     {
         $model = new Specializations();
+        $doctors=new Doctors();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post()) && $doctors->load(Yii::$app->request->post())) {
+
+            $model->save();
+            $doctors->specialization_id=$model->specialization_id;
+            $doctors->save();
+
             return $this->redirect(['view', 'id' => $model->specialization_id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
+                'doctors'=> $doctors,
             ]);
         }
     }

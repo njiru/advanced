@@ -1,7 +1,10 @@
 <?php
 
 use yii\helpers\Html;
-use yii\grid\GridView;
+//use yii\grid\GridView;
+use yii\widgets\Pjax;
+use backend\models\AppointmentsSearch;
+use kartik\grid\GridView;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\DoctorsSearch */
@@ -18,12 +21,27 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?= Html::a('Create Doctors', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
+    <?php Pjax::begin(); ?>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+             [
+                'class' => 'kartik\grid\ExpandRowColumn',
+                'value' => function($model, $key, $index, $column){
+                    return GridView::ROW_COLLAPSED;
+                },
+                'detail' => function($model, $key, $index, $column){
+                    $searchModel                    = new AppointmentsSearch();
+                    $searchModel->doctor_id    = $model->doctor_id;
+                    $dataProvider                   = $searchModel->search(Yii::$app->request->queryParams);
 
+                    return Yii::$app->controller->renderPartial('_docAppoints', [
+                        'searchModel'  => $searchModel,
+                        'dataProvider' => $dataProvider
+                    ]);
+                },
+            ],
             //'doctor_id',
             'doctors_name',
             'email:email',
@@ -32,4 +50,5 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
+    <?php Pjax::end(); ?>
 </div>

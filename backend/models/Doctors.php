@@ -35,7 +35,7 @@ class Doctors extends \yii\db\ActiveRecord
             [['doctors_name', 'email', 'specialization_id'], 'required'],
             [['specialization_id'], 'integer'],
             [['doctors_name'], 'string', 'max' => 20],
-            [['email'], 'string', 'max' => 50],
+            ['email','email'],
             [['specialization_id'], 'exist', 'skipOnError' => true, 'targetClass' => Specializations::className(), 'targetAttribute' => ['specialization_id' => 'specialization_id']],
         ];
     }
